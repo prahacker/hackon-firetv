@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "805534175835",
+    "project_id": "firetv-project-ba2ad",
+    "storage_bucket": "firetv-project-ba2ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805534175835:android:cccc627a162fe8e06ea57e",
+        "android_client_info": {
+          "package_name": "com.example.firetv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUk_XTqDydfapjRyVwLJDDafG3fU-1wk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
