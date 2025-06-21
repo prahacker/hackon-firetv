@@ -1,5 +1,6 @@
 package com.example.firetv
 
+import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RatingBar
@@ -26,49 +27,84 @@ class CardPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
-        val movie = item as Movie
         val cardView = viewHolder.view as ImageCardView
 
-        cardView.titleText = movie.title
-        cardView.contentText = movie.studio
-
-        // Set main image
-        Glide.with(cardView.context)
-            .load(movie.cardImageUrl)
-            .centerCrop()
-            .into(cardView.mainImageView)
-
-        // Ensure we don't duplicate rating bars
-        if (cardView.findViewWithTag<LinearLayout>("rating_container") == null) {
-            val ratingBar = RatingBar(cardView.context, null, android.R.attr.ratingBarStyleSmall).apply {
-                numStars = 5
-                stepSize = 0.5f
-                rating = movie.rating.toFloat().div(2).coerceIn(0f, 5f)
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                setIsIndicator(true)
+        // --- SKELETON PLACEHOLDER ---
+        if (item is SkeletonMovie) {
+            cardView.titleText = ""
+            cardView.contentText = ""
+            cardView.mainImage = null
+            cardView.setBackgroundColor(Color.parseColor("#e0e0e0")) // Grey
+            // Remove rating bar if present
+            cardView.findViewWithTag<LinearLayout>("rating_container")?.let {
+                cardView.removeView(it)
             }
+            return
+        } else {
+            cardView.setBackgroundColor(Color.TRANSPARENT)
+        }
 
-            val ratingContainer = LinearLayout(cardView.context).apply {
-                orientation = LinearLayout.VERTICAL
-                setPadding(16, 0, 0, 16)
-                tag = "rating_container"
-                addView(ratingBar)
-            }
+        // --- MOVIE TYPE (Popular row) ---
+        if (item is Movie) {
+            cardView.titleText = item.title
+            cardView.contentText = item.studio ?: ""
+            Glide.with(cardView.context)
+                .load(item.cardImageUrl)
+                .centerCrop()
+                .into(cardView.mainImageView)
+            setRating(cardView, item.rating)
+            return
+        }
 
-            cardView.addView(ratingContainer)
+        // --- RECOMMENDATION TYPE (from API) ---
+        if (item is Recommendation) {
+            cardView.titleText = item.title
+            cardView.contentText = item.description ?: ""
+            // Prefer imageUrl, fallback to poster_image if missing
+            val mainImg = item.imageUrl ?: item.poster_image ?: item.imageUrl
+
+            Glide.with(cardView.context)
+                .load(mainImg)
+                .centerCrop()
+                .into(cardView.mainImageView)
+            // If you want to show rating, use item.rating; else, skip or use 0.0
+            setRating(cardView, item.rating?.toDouble() ?: 0.0)
+            return
         }
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
         val cardView = viewHolder.view as ImageCardView
         cardView.mainImage = null
-
         // Remove rating container only
         cardView.findViewWithTag<LinearLayout>("rating_container")?.let {
             cardView.removeView(it)
         }
+    }
+
+    // Helper: Adds a RatingBar to the card view
+    private fun setRating(cardView: ImageCardView, rating: Double) {
+        // Remove old rating bar if present
+        cardView.findViewWithTag<LinearLayout>("rating_container")?.let {
+            cardView.removeView(it)
+        }
+        // Add new RatingBar
+        val ratingBar = RatingBar(cardView.context, null, android.R.attr.ratingBarStyleSmall).apply {
+            numStars = 5
+            stepSize = 0.5f
+            this.rating = ((rating / 2).coerceIn(0.0, 5.0)).toFloat()
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setIsIndicator(true)
+        }
+        val ratingContainer = LinearLayout(cardView.context).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(16, 0, 0, 16)
+            tag = "rating_container"
+            addView(ratingBar)
+        }
+        cardView.addView(ratingContainer)
     }
 }

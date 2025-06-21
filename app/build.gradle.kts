@@ -51,19 +51,29 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.leanback)
     implementation("com.google.code.gson:gson:2.10.1")
-
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
     // Glide
     implementation(libs.glide)
+    // networking
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+// JSON parsing
+    implementation("com.google.code.gson:gson:2.9.0")
 
     // Firebase
     implementation("com.google.firebase:firebase-analytics-ktx:21.4.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+
 
     // ✅ GMS (play-services) - aligned versions
     implementation("com.google.android.gms:play-services-measurement-api:21.4.0")
     implementation("com.google.android.gms:play-services-measurement-impl:21.4.0")
     implementation("com.google.android.gms:play-services-measurement:21.4.0")
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.androidx.fragment)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
 }

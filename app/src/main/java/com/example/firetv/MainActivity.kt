@@ -10,7 +10,9 @@ class MainActivity : FragmentActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_browse_fragment, MovieFragment())
+                // This line is the critical fix.
+                // It ensures the banner layout is NOT deleted.
+                .replace(R.id.browse_fragment, MovieFragment())
                 .commitNow()
         }
     }

@@ -5,7 +5,7 @@ import java.io.Serializable
 data class Movie(
     val id: String = "",                                // Firebase logs & card
     val title: String = "",                             // Shown on card & banner
-    val description: String = "",                       // Used in details view
+    var description: String = "",                       // Used in details view
     val studio: String = "",                            // Used in details view
     val videoUrl: String = "",                          // Playback intent
     val deeplink: String = "",                          // For opening apps
@@ -16,5 +16,6 @@ data class Movie(
     val backdrop_image: String = "",                    // VideoDetailsFragment
     val deeplinks: List<String> = emptyList(),
     val rating: Double = 0.0,                           // Star rating
-    val available_platforms: List<String> = emptyList() // For FirebaseLogger
+    val available_platforms: List<String> = emptyList(), // For FirebaseLogger
+    val trailer: String? = null // YouTube trailer link
 ) : Serializable
