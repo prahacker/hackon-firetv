@@ -143,11 +143,8 @@ class VideoDetailsFragment : DetailsSupportFragment() {
         val relatedMovies = MovieListProvider.getMovieList(requireContext()).toMutableList()
         relatedMovies.shuffle()
 
-        val listRowAdapter = ArrayObjectAdapter(CardPresenter()).apply {
-            for (i in 0 until NUM_COLS) {
-                add(relatedMovies[i % relatedMovies.size])
-            }
-        }
+        val listRowAdapter = ArrayObjectAdapter(CardPresenter(false))
+
 
         val header = HeaderItem(0, getString(R.string.related_movies))
         mAdapter.add(ListRow(header, listRowAdapter))

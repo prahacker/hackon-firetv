@@ -1,0 +1,20 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solid black overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#CC000000"/>
+        </shape>
+    </item>
+    <!-- Transparent window: offset as needed for your focused row -->
+
+    <item android:top="310dp">
+        <shape android:shape="rectangle">
+            <!-- Position the window: adjust top/bottom as needed -->
+            <solid android:color="@android:color/transparent"/>
+            <size android:height="330dp" android:width="2500dp"/>
+
+        </shape>
+        <!-- Place the window at the right vertical offset -->
+        <top android:drawable="@null" android:inset="120dp"/>
+    </item>
+</layer-list>

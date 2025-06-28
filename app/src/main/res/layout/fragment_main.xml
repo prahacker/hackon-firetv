@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_fragment_root"
+<LinearLayout android:id="@+id/bannerOverlay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:background="#80000000"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/topBannerImageView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="top" />
+    <TextView
+        android:id="@+id/bannerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-    <fragment
-        android:id="@+id/browse_fragment"
-        android:name="androidx.leanback.app.BrowseSupportFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp" />
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/bannerRatingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:progressTint="@android:color/white"
+        android:progressBackgroundTint="@android:color/darker_gray"
+        android:secondaryProgressTint="@android:color/white" />
+
+    <TextView
+        android:id="@+id/bannerDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description..."
+        android:textColor="#CCCCCC"
+        android:textSize="14sp" />
+</LinearLayout>

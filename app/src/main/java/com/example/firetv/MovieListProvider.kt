@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 
 object MovieListProvider {
     fun getMovieList(context: Context): List<Movie> {
-        val json = context.assets.open("tmdb_complete_shows_20250615_135431.json")
+        val json = context.assets.open("netflix_prime_content_deduped.json")
             .bufferedReader().use { it.readText() }
 
         val listType = object : TypeToken<List<Movie>>() {}.type

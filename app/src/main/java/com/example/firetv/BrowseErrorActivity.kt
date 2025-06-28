@@ -25,7 +25,7 @@ class BrowseErrorActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_browse_fragment, MovieFragment())
+                .replace(R.id.browse_fragment, MovieFragment())
 // or ErrorFragment() etc.
 
                 .commitNow()
@@ -37,13 +37,13 @@ class BrowseErrorActivity : FragmentActivity() {
         mErrorFragment = ErrorFragment()
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.main_browse_fragment, mErrorFragment)
+            .add(R.id.browse_fragment, mErrorFragment)
             .commit()
 
         mSpinnerFragment = SpinnerFragment()
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.main_browse_fragment, mSpinnerFragment)
+            .add(R.id.browse_fragment, mSpinnerFragment)
             .commit()
 
         val handler = Handler(Looper.myLooper()!!)

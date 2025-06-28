@@ -15,5 +15,23 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:fontFamily">@font/noto_sans_regular</item>
     </style>
+    <style name="Theme.FireTV" parent="Theme.Leanback">
+    </style>
+
+    <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
+
+
+    <style name="CustomBannerRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:minHeight">22dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
+    <style name="CustomRatingBarTheme" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
+
 </resources>
 

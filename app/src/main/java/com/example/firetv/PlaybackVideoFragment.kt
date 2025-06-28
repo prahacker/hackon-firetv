@@ -16,8 +16,7 @@ class PlaybackVideoFragment : VideoSupportFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val (_, title, description, _, _, videoUrl) =
-            activity?.intent?.getSerializableExtra(DetailsActivity.MOVIE) as Movie
+        val movie = activity?.intent?.getSerializableExtra(DetailsActivity.MOVIE) as Movie
 
         val glueHost = VideoSupportFragmentGlueHost(this@PlaybackVideoFragment)
         val playerAdapter = MediaPlayerAdapter(activity)
@@ -25,12 +24,13 @@ class PlaybackVideoFragment : VideoSupportFragment() {
 
         mTransportControlGlue = PlaybackTransportControlGlue(getActivity(), playerAdapter)
         mTransportControlGlue.host = glueHost
-        mTransportControlGlue.title = title
-        mTransportControlGlue.subtitle = description
+        mTransportControlGlue.title = movie.title
+        mTransportControlGlue.subtitle = movie.description
         mTransportControlGlue.playWhenPrepared()
 
-        playerAdapter.setDataSource(Uri.parse(videoUrl))
+        playerAdapter.setDataSource(Uri.parse(movie.videoUrl))
     }
+
 
     override fun onPause() {
         super.onPause()

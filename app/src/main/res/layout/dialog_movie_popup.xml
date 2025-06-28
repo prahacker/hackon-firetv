@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/play_movie_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PLAY MOVIE"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:backgroundTint="#93ee2b"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/play_trailer_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WATCH TRAILER"
+        android:textAllCaps="true"
+        android:backgroundTint="#333333"
+        android:textColor="@android:color/white"
+        android:enabled="false"/>
+</LinearLayout>
