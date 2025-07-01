@@ -2,14 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Remove duplicate INTERNET permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <!-- Fire TV specific features -->
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
     <uses-feature
         android:name="android.software.leanback"
         android:required="true" />
+    <!-- Add this for better Fire TV compatibility -->
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -17,10 +25,17 @@
         android:label="@string/app_name"
         android:banner="@drawable/app_icon_your_company"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FireTv">
+        android:theme="@style/Theme.FireTv"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="28">
+
+        <!-- Fire TV specific metadata -->
         <meta-data
             android:name="com.amazon.device.application.targetedApps"
             android:value="launcher" />
+
         <activity
             android:name=".MainActivity"
             android:banner="@drawable/app_icon_your_company"
@@ -28,22 +43,32 @@
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/app_name"
             android:logo="@drawable/app_icon_your_company"
-            android:screenOrientation="landscape">
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
-
         </activity>
+
         <activity
             android:name=".DetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <activity
             android:name=".PlaybackActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <activity
             android:name=".BrowseErrorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true" />
     </application>
-
 </manifest>

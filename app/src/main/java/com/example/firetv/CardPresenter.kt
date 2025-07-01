@@ -1,26 +1,28 @@
 package com.example.firetv
 
+import android.animation.ValueAnimator
+import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RatingBar
-import androidx.leanback.widget.BaseCardView
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 
-class CardPresenter : Presenter() {
+class CardPresenter(
+    private val isZoomedModeProvider: () -> Boolean
+) : Presenter() {
 
-    companion object {
-        private const val CARD_WIDTH = 313
-        private const val CARD_HEIGHT = 176
-    }
+    private val normalCardWidth = 320
+    private val normalCardHeight = 400
+    private val zoomedCardWidth = 384
+    private val zoomedCardHeight = 480
+    private val animationDuration = 150L
+
+    constructor(isZoomedMode: Boolean) : this({ isZoomedMode })
 
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         val cardView = ImageCardView(parent.context).apply {
             isFocusable = true
             isFocusableInTouchMode = true
-            setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
-            cardType = BaseCardView.CARD_TYPE_INFO_UNDER
         }
         return ViewHolder(cardView)
     }
@@ -29,46 +31,62 @@ class CardPresenter : Presenter() {
         val movie = item as Movie
         val cardView = viewHolder.view as ImageCardView
 
-        cardView.titleText = movie.title
-        cardView.contentText = movie.studio
+        val isZoomed = isZoomedModeProvider()
 
-        // Set main image
+        val baseWidth = if (isZoomed) zoomedCardWidth else normalCardWidth
+        val baseHeight = if (isZoomed) zoomedCardHeight else normalCardHeight
+        cardView.setMainImageDimensions(baseWidth, baseHeight)
+
+        // --- THIS IS THE CHANGE ---
+        // Conditionally set the text and info area visibility based on the zoom mode
+        if (isZoomed) {
+            // In zoomed mode, hide the text and the entire grey info area
+            cardView.titleText = null
+            cardView.contentText = null
+            cardView.setInfoVisibility(View.GONE) // Hide the info area
+        } else {
+            // In normal mode, show the text and the info area
+            cardView.titleText = movie.title
+            cardView.contentText = movie.studio
+            cardView.setInfoVisibility(View.VISIBLE) // Show the info area
+        }
+        // --- END OF CHANGE ---
+
         Glide.with(cardView.context)
             .load(movie.cardImageUrl)
             .centerCrop()
             .into(cardView.mainImageView)
 
-        // Ensure we don't duplicate rating bars
-        if (cardView.findViewWithTag<LinearLayout>("rating_container") == null) {
-            val ratingBar = RatingBar(cardView.context, null, android.R.attr.ratingBarStyleSmall).apply {
-                numStars = 5
-                stepSize = 0.5f
-                rating = movie.rating.toFloat().div(2).coerceIn(0f, 5f)
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                setIsIndicator(true)
-            }
+        cardView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            val unfocusedWidth = if (isZoomed) zoomedCardWidth else normalCardWidth
+            val unfocusedHeight = if (isZoomed) zoomedCardHeight else normalCardHeight
 
-            val ratingContainer = LinearLayout(cardView.context).apply {
-                orientation = LinearLayout.VERTICAL
-                setPadding(16, 0, 0, 16)
-                tag = "rating_container"
-                addView(ratingBar)
-            }
+            val focusedWidth = (unfocusedWidth * 1.1f).toInt()
+            val focusedHeight = (unfocusedHeight * 1.1f).toInt()
 
-            cardView.addView(ratingContainer)
+            val startWidth = if (hasFocus) unfocusedWidth else focusedWidth
+            val endWidth = if (hasFocus) focusedWidth else unfocusedWidth
+            val startHeight = if (hasFocus) unfocusedHeight else focusedHeight
+            val endHeight = if (hasFocus) focusedHeight else unfocusedHeight
+
+            animateSizeChange(cardView, startWidth, endWidth, startHeight, endHeight)
         }
+    }
+
+    private fun animateSizeChange(cardView: ImageCardView, startWidth: Int, endWidth: Int, startHeight: Int, endHeight: Int) {
+        val widthAnimator = ValueAnimator.ofInt(startWidth, endWidth)
+        widthAnimator.duration = animationDuration
+        widthAnimator.addUpdateListener {
+            val width = it.animatedValue as Int
+            val height = startHeight + ((it.animatedFraction * (endHeight - startHeight)).toInt())
+            cardView.setMainImageDimensions(width, height)
+        }
+        widthAnimator.start()
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
         val cardView = viewHolder.view as ImageCardView
+        cardView.onFocusChangeListener = null
         cardView.mainImage = null
-
-        // Remove rating container only
-        cardView.findViewWithTag<LinearLayout>("rating_container")?.let {
-            cardView.removeView(it)
-        }
     }
 }

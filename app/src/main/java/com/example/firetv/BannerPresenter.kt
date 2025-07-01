@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 class BannerPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         val imageView = ImageView(parent.context).apply {
-            layoutParams = ViewGroup.LayoutParams(1920, 400)
+            layoutParams = ViewGroup.LayoutParams(1920, 800)
             scaleType = ImageView.ScaleType.CENTER_CROP
         }
         return ViewHolder(imageView)

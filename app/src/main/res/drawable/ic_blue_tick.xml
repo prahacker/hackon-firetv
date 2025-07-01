@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="256dp"
+    android:height="256dp"
+    android:viewportWidth="256"
+    android:viewportHeight="256">
+  <path
+      android:pathData="M140.95,4.57L140.95,4.57c13.12,-6.72 29.21,-2.41 37.21,9.97l0,0c5.01,7.76 13.45,12.63 22.68,13.09l0,0c14.73,0.74 26.5,12.51 27.24,27.24l0,0c0.46,9.23 5.34,17.66 13.09,22.68l0,0c12.38,8 16.69,24.09 9.97,37.21l0,0c-4.21,8.22 -4.21,17.97 0,26.19l0,0c6.72,13.12 2.41,29.21 -9.97,37.21l0,0c-7.76,5.01 -12.63,13.45 -13.09,22.68l0,0c-0.74,14.73 -12.51,26.5 -27.24,27.24l0,0c-9.23,0.46 -17.66,5.34 -22.68,13.09l0,0c-8,12.38 -24.09,16.69 -37.21,9.97l0,0c-8.22,-4.21 -17.97,-4.21 -26.19,0l0,0c-13.12,6.72 -29.21,2.41 -37.21,-9.97l0,0c-5.01,-7.76 -13.45,-12.63 -22.68,-13.09l0,0c-14.73,-0.74 -26.5,-12.51 -27.24,-27.24l0,0c-0.46,-9.23 -5.34,-17.66 -13.09,-22.68l0,0C2.15,170.16 -2.15,154.07 4.57,140.95l0,0c4.21,-8.22 4.21,-17.97 0,-26.19l0,0c-6.72,-13.12 -2.41,-29.21 9.97,-37.21l0,0c7.76,-5.01 12.63,-13.45 13.09,-22.68l0,0c0.74,-14.73 12.51,-26.5 27.24,-27.24l0,0c9.23,-0.46 17.66,-5.34 22.68,-13.09l0,0c8,-12.38 24.09,-16.69 37.21,-9.97l0,0C122.98,8.78 132.73,8.78 140.95,4.57z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.81"
+      android:fillColor="#0083F9"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+  <path
+      android:pathData="M105.21,187.71l0,0l0,-54.51l0,0l72.67,-32.48l27.26,27.26z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.81"
+      android:fillColor="#0077E3"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+  <path
+      android:pathData="M105.21,187.71l-54.63,-54.6l27.26,-27.29l27.37,27.37l65.11,-65.19l27.26,27.23z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.81"
+      android:fillColor="#FFFFFF"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+</vector>

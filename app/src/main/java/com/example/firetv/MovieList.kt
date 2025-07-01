@@ -1,38 +1,40 @@
 package com.example.firetv
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import org.json.JSONArray
 
 object MovieList {
-    fun getMovies(context: Context): List<Movie> {
-        val movies = mutableListOf<Movie>()
-        try {
-            val inputStream = context.assets.open("tmdb_complete_shows_20250615_135431.json")
-            val jsonStr = inputStream.bufferedReader().use { it.readText() }
-            val jsonArray = JSONArray(jsonStr)
+    private val allowedPlatforms = setOf(
+        "Netflix",
+        "Netflix India",
+        "Amazon Prime Video",
+        "Prime Video",
+        "Amazon Prime Video with Ads",
+        "Netflix Standard with Ads"
+    )
 
-            for (i in 0 until jsonArray.length()) {
-                val obj = jsonArray.getJSONObject(i)
+    fun getMovies(context: Context, callback: (List<Movie>) -> Unit) {
+        Thread {
+            val movies = mutableListOf<Movie>()
+            try {
+                val jsonStr = context.assets.open("netflix_prime_content_deduped.json")
+                    .bufferedReader().use { it.readText() }
+                val jsonArray = JSONArray(jsonStr)
 
-                val movie = Movie(
-                    title = obj.optString("title"),
-                    description = obj.optString("description"),
-                    studio = obj.optString("platform", "Unknown"),
-                    homepage = obj.optString("homepage"),
-                    poster_image = obj.optString("poster_image"),
-                    cardImageUrl = obj.optString("poster_image"),
-                    backdrop_image = obj.optString("backdrop_image"),
-                    deeplinks = obj.optJSONArray("available_platforms")?.let { array ->
-                        List(array.length()) { array.getString(it) }
-                    } ?: emptyList(),
-                    rating = obj.optDouble("rating", 0.0)
-                )
-
-                movies.add(movie)
+                for (i in 0 until jsonArray.length()) {
+                    val obj = jsonArray.getJSONObject(i)
+                    val movie = Movie.fromJson(obj)
+                    movies.add(movie)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return movies
+            // Post the result back to the Main UI Thread
+            Handler(Looper.getMainLooper()).post {
+                callback(movies)
+            }
+        }.start()
     }
 }

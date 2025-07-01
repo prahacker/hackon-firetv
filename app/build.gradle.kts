@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.example.firetv"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.firetv"
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
@@ -45,27 +45,45 @@ android {
     }
 }
 
+
+
 dependencies {
-    // AndroidX
+    // AndroidX Core + UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.leanback)
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.fragment:fragment-ktx:1.5.0")
+    implementation(libs.androidx.fragment)
 
-    // Glide
-    implementation(libs.glide)
+    // ✅ Leanback (downgraded for AGP 8.2.0 & SDK 34)
+    implementation("androidx.leanback:leanback:1.1.0-alpha02")
+    implementation("androidx.leanback:leanback-grid:1.0.0-alpha01")
+
+    // Material Design & Shimmer
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     // Firebase
     implementation("com.google.firebase:firebase-analytics-ktx:21.4.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
 
-    // ✅ GMS (play-services) - aligned versions
+    // Glide for image loading
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.androidx.adapters)
+    implementation(libs.androidx.material3.android)
+    kapt("com.github.bumptech.glide:compiler:4.15.1") // ✅ Kotlin annotation processing
+
+    // Networking + JSON
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.google.code.gson:gson:2.10.1") // Keep the latest Gson only
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.1")
+    implementation("androidx.leanback:leanback:1.0.0")
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
+    // Cronet
+    implementation(libs.cronet.embedded)
+    implementation("com.google.android.material:material:1.12.0")
+    // GMS (Google Play Services Measurement)
     implementation("com.google.android.gms:play-services-measurement-api:21.4.0")
     implementation("com.google.android.gms:play-services-measurement-impl:21.4.0")
     implementation("com.google.android.gms:play-services-measurement:21.4.0")
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
-
 }
-
-

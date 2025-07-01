@@ -1,9 +1,21 @@
 <resources>
     <style name="Theme.FireTv" parent="Theme.Leanback">
-        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:fontFamily">@font/amazon_ember_lt</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="browseTitleTextStyle">@style/HeaderText</item>
 
+        <item name="imageCardViewTitleStyle">@style/CardTitleStyle</item>
+    </style>
+
+    <style name="CardTitleStyle" parent="Widget.Leanback.ImageCardView.TitleStyle">
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CustomBrowseHeadersStyle" parent="Widget.Leanback.Headers">
+        <item name="android:background">#212121</item>
+        <item name="android:padding">16dp</item>
     </style>
 
     <style name="LeanbackHeaders" parent="Widget.Leanback.Headers">
@@ -11,9 +23,22 @@
     </style>
 
     <style name="HeaderText" parent="TextAppearance.Leanback.Header">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:fontFamily">@font/amazon_ember_lt</item>
+    </style>
+
+    <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
+
+    <style name="CustomBannerRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:minHeight">22dp</item>
+        <item name="android:maxHeight">24dp</item>
+    </style>
+    <style name="CustomRatingBarTheme" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/white</item>
     </style>
 </resources>
-
